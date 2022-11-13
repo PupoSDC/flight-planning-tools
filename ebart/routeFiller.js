@@ -102,7 +102,7 @@ const fill = async () => {
         inputs.filter(a => a.name.includes("ttrk"))[0].value = entry[row.TrkT];
         inputs.filter(a => a.name.includes("mvar"))[0].value = "-6"
         inputs.filter(a => a.name.includes("mtrk"))[0].value = entry[row.TrkM];
-        inputs.filter(a => a.name.includes("wca"))[0].value = (Number(entry[row.TrkM]) - Number(entry[row.HdgM])).toString();
+        inputs.filter(a => a.name.includes("wca"))[0].value = (-1.0 * (Number(entry[row.TrkM]) - Number(entry[row.HdgM]))).toString();
         inputs.filter(a => a.name.includes("mhdg"))[0].value = entry[row.HdgM]
         inputs.filter(a => a.name.includes("gs"))[0].value = entry[row.GS]
         inputs.filter(a => a.name.includes("dist"))[0].value = entry[row.Dist]
