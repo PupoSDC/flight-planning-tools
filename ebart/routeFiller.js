@@ -1,65 +1,50 @@
 const initialFuel = 85
-const fuelPerHour = 18.15
+const fuelPerHour = 18.07
 const route = `
 "Elevation 606 ft (22 hPa)
-SR 05:36 Z, MCT 05:00 Z",RNav,MSA,Level,TAS,TrkT,TrkM,Wind,HdgM,GS,Dist,Time
-Y (EPLL),LOZ 256/10,2200,2000,94,312,306,268/13,299,65,2.4,2 (2)
-L (EPLL),LOZ 274/13,2300,2000,94,327,321,285/15,315,82,4.4,3 (5)
-W (EPLL),LOZ 259/19,2000,2000,94,238,232,285/15,238,83,7.3,5 (11)
-C (EPLL),LOZ 259/25,2700,2000,94,263,257,285/15,260,79,6.2,5 (15)
-Turek,LOZ 285/44,2700,2000,94,316,310,295/20,306,75,24,19 (35)
-Jarocin,CMP 104/31,2100,2000,94,266,260,293/15,264,79,37,28 (63)
-Gostyń,CMP 141/19,2000,2000,94,254,249,288/20,255,77,19,15 (78)
-Leszno,CMP 193/18,1900,2000,94,262,257,288/20,262,74,16,13 (91)
-EPLS STRZYŻEWICE k/Leszna,CMP 198/19,1700,2000,94,258,252,279/22,257,73,1.8,1 (93)
-Rawicz,CMP 162/31,2000,2000,94,131,125,279/22,132,112,19,10 (103)
-Żmigród,WCL 355/23,1200,2000,94,180,174,279/22,187,95,9.5,6 (109)
-N511948 E0164835,WCL 340/15,1600,2000,94,204,198,282/15,207,89,9.2,6 (115)
-Z (EPWR),WCL 339/10,1800,2000,94,166,160,282/15,169,100,5.0,3 (118)
-R (EPWR),WCL 018/4,2000,2000,94,142,137,282/15,142,105,7.2,4 (122)
-N (EPWR),WCL 340/2,2000,2000,94,230,224,282/15,231,84,2.8,2 (124)
-EPWR WROCŁAW/Strachowice,WCL 292/1,1300,2000,94,205,200,282/15,209,89,1.5,1 (125)
-N (EPWR),WCL 340/2,1300,2000,94,025,020,282/15,011,96,1.5,1 (126)
-R (EPWR),WCL 018/4,2000,2000,94,050,044,282/15,037,102,2.8,2 (128)
-EPWS Szymanów,WCL 020/7,2000,2000,94,026,021,282/15,012,96,3.4,2 (130)
-T (EPWS),WCL 020/14,1700,2000,94,023,017,296/15,008,92,6.2,4 (134)
-N512830 E0171831,WCL 029/27,2100,2000,94,041,036,296/15,027,97,14,9 (142)
-Ostrów Wielkopolski,WCL 041/48,2100,2300,94,060,055,289/20,045,103,22,13 (155)
-S (EPOM),WCL 040/48,1900,2300,94,336,330,298/20,322,78,1.3,1 (156)
-EPOM MICHAŁKÓW k/Ostrowa Wlkp,CMP 117/49,1900,2300,94,043,037,298/20,025,97,2.4,1 (158)
-E (EPOM),CMP 114/52,1900,2300,94,089,083,298/20,077,111,3.7,2 (160)
-Kalisz,CMP 109/55,1400,2300,94,057,051,298/20,041,102,6.0,4 (163)
-Warta,LOZ 259/38,2200,2300,94,098,093,297/20,089,113,20,11 (174)
-C (EPLL),LOZ 259/25,2000,2300,94,083,077,297/21,070,110,12,7 (181)
-W (EPLL),LOZ 259/19,2700,2300,94,083,077,297/21,070,110,6.2,3 (184)
-L (EPLL),LOZ 274/13,2000,2300,94,058,052,289/16,044,103,7.3,4 (188)
-Y (EPLL),LOZ 256/10,2300,2300,94,147,141,289/17,147,110,4.4,2 (191)
-EPLL Łódź,LOZ 244/9,2200,2300,94,132,126,289/17,129,116,2.4,1 (192)
+SR 05:41 Z, MCT 05:05 Z",RNav,MSA,Level,TAS,TrkT,TrkM,Wind,HdgM,GS,Dist,Time
+Y (EPLL),LOZ 256/10,2200,2000,94,312,306,146/12,303,83,2.4,2 (2)
+L (EPLL),LOZ 274/13,2300,2000,94,327,321,185/15,315,105,4.4,2 (4)
+X (EPLL),LOZ 358/7,2300,2000,94,069,063,186/15,071,100,14,8 (13)
+K (EPLL),LOZ 107/7,2100,2000,94,146,140,165/15,143,80,12,9 (21)
+G (EPTM),LOZ 111/11,2100,2000,94,123,117,166/15,123,83,3.5,3 (24)
+H (EPTM),LOZ 099/16,2100,2000,94,081,074,166/14,083,92,5.6,4 (28)
+M (EPTM),LOZ 100/23,2000,2000,94,107,101,153/13,107,85,7.1,5 (33)
+Z (EPTM),LOZ 108/27,1500,2000,94,148,142,153/13,142,81,5.6,4 (37)
+B (EPTM),LOZ 111/33,1600,2000,94,130,124,153/13,127,82,6.4,5 (41)
+D (EPTM),LOZ 117/37,2200,2000,94,167,161,154/13,159,82,5.2,4 (45)
+Z (EPKA),LOZ 136/62,2700,2000,94,165,159,147/17,155,78,29,22 (68)
+EPKA MASŁÓW k/Kielc,KAK 030/61,2800,2000,94,150,144,147/17,143,78,5.4,4 (72)
+K (EPKA),KAK 025/58,2700,2000,94,277,271,134/13,266,104,5.8,3 (75)
+Włoszczowa,KAX 050/41,2200,2000,94,262,255,144/07,252,99,23,14 (89)
+R (EPPT),LOZ 161/36,2300,2000,94,348,342,200/07,340,101,21,12 (102)
+E (EPPT),LOZ 158/25,1700,2000,94,353,347,186/11,345,105,11,6 (108)
+EPPT Piotrków Trybunalski,LOZ 169/24,1600,2000,94,274,268,185/11,261,93,4.9,3 (111)
+N (EPPT),LOZ 165/20,2300,2000,94,019,013,184/11,015,105,3.9,2 (113)
+R (EPLL),LOZ 205/9,2300,2000,94,324,318,166/13,315,105,14,8 (122)
+S (EPLL),LOZ 228/8,1700,2000,94,326,320,189/13,315,107,3.7,2 (124)
+EPLL Łódź,LOZ 244/9,2200,2000,94,318,312,189/13,306,108,2.5,1 (125)
 "Elevation 606 ft (22 hPa)
-SS 15:14 Z, ECT 15:50 Z",,,,,,,,,,289,3:11
+SS 15:09 Z, ECT 15:45 Z",,,,,,,,,,191,2:05
 
 TWR,ŁÓDŹ TOWER,124.230
 ATIS,ATIS,135.680
 TWR,Łódź Delivery,120.005
 EPLL,Warszawa Information,128.575
+EPTM,TOMASZÓW TOWER,125.000
+APP,TOMASZÓW APPROACH,130.250
+Krakow Flight Information Service,Krakow Information,119.950
+A/G,MASŁÓW RADIO,118.080
+Krakow Flight Information Service,Krakow Information,119.275
+A/G,PIOTRKÓW RADIO,119.305
 EPLL,Warszawa Information,119.450
-Poznan Flight Information Service,Poznan Information,126.300
-Poznan Flight Information Service,Poznan Information,127.250
-A/G,LESZNO RADIO,122.305
-A/G,Goledzinow Radio,122.700
-TWR,WROCŁAW DELIVERY,121.805
-TWR,WROCŁAW TOWER,120.255
-ATIS,ATIS,124.330
-A/G,Szymanów Radio,124.115
-A/G,MICHAŁKÓW RADIO,122.205
 
 LOD (Lodz),,110.500
 LOZ (Wiaczyn Dolny),,112.400
-CMP (Czempin),,114.500
-WCL (Wroclaw/Strachowice),,111.650
-WRO (Wroclaw/Strachowice),,110.300
+KAK (Krakow Balice),,112.800
+KAX (Katowice/Pyrzowice),,114.800
 `
-
+ 
 const row = {
     RNav: -1,
     MSA: -1,
@@ -73,42 +58,47 @@ const row = {
     Dist: -1,
     Time: -1
 }
-
+ 
 const reset = () => {
     [...document.getElementsByTagName("img")]
         .filter(img => img.id.includes("del"))
         .map(img => img.click())
 }
-
+ 
 const fill = async () => {
     reset();
     const lines = route.split("\n")
     const header = lines.find(row => row.startsWith("SR")).split(",")
     const entries = lines.map(l => l.split(",")).filter(l => l.length === header.length - 1)
-
+ 
     Object.keys(row).forEach(key => {
         row[key] = header.findIndex(e => e === key) - 1
     })
-
+ 
     Object.entries(row).filter(([e, v]) => {
         if (v === -1) {
             alert("Please re-export skydemon plan with ${e}")
             throw new Error("Please re-export skydemon plan with ${e}")
         }
     })
-
+ 
     let fuelRemaining = initialFuel;
     for (let entry of entries) {
         document.getElementsByClassName("btn-info")[0].click()
-
+ 
         await new Promise(r => setTimeout(r, 400))
         const inputs = [...[...document.getElementsByTagName("tr")].at(-2).getElementsByTagName("input")]
         const rnavParts = entry[row.RNav].split(/( |\/)/gm)
         const rnav = `${rnavParts[0]}/${("00" + rnavParts[2]).slice(-3)}/${("00" + rnavParts[4]).slice(-3)}`
         const time = Number(entry[row.Time].split(" ")[0]);
 
+        let pointName = entry[0]
+        if (pointName.match(/^([a-zA-Z]{1}) \(([a-zA-Z]{4})\)/gm)) {
+            pointName = `${pointName.slice(3,7)}${pointName[0]}`
+        }
+ 
         fuelRemaining = fuelRemaining - fuelPerHour * time / 60
-        inputs.filter(a => a.name.includes("waypoint"))[0].value = `${entry[0]} - ${rnav}`;
+        inputs.filter(a => a.name.includes("waypoint"))[0].value = `${pointName} - ${rnav}`;
         inputs.filter(a => a.name.includes("ttrk"))[0].value = entry[row.TrkT];
         inputs.filter(a => a.name.includes("mvar"))[0].value = "-6"
         inputs.filter(a => a.name.includes("mtrk"))[0].value = entry[row.TrkM];
@@ -121,5 +111,5 @@ const fill = async () => {
         inputs.filter(a => a.name.includes("planfob"))[0].value = Math.round(fuelRemaining).toString();
     }
 }
-
+ 
 fill();
