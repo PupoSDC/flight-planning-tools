@@ -2,47 +2,31 @@ const initialFuel = 85
 const fuelPerHour = 18.07
 const route = `
 "Elevation 606 ft (22 hPa)
-SR 05:41 Z, MCT 05:05 Z",RNav,MSA,Level,TAS,TrkT,TrkM,Wind,HdgM,GS,Dist,Time
-Y (EPLL),LOZ 256/10,2200,2000,94,312,306,146/12,303,83,2.4,2 (2)
-L (EPLL),LOZ 274/13,2300,2000,94,327,321,185/15,315,105,4.4,2 (4)
-X (EPLL),LOZ 358/7,2300,2000,94,069,063,186/15,071,100,14,8 (13)
-K (EPLL),LOZ 107/7,2100,2000,94,146,140,165/15,143,80,12,9 (21)
-G (EPTM),LOZ 111/11,2100,2000,94,123,117,166/15,123,83,3.5,3 (24)
-H (EPTM),LOZ 099/16,2100,2000,94,081,074,166/14,083,92,5.6,4 (28)
-M (EPTM),LOZ 100/23,2000,2000,94,107,101,153/13,107,85,7.1,5 (33)
-Z (EPTM),LOZ 108/27,1500,2000,94,148,142,153/13,142,81,5.6,4 (37)
-B (EPTM),LOZ 111/33,1600,2000,94,130,124,153/13,127,82,6.4,5 (41)
-D (EPTM),LOZ 117/37,2200,2000,94,167,161,154/13,159,82,5.2,4 (45)
-Z (EPKA),LOZ 136/62,2700,2000,94,165,159,147/17,155,78,29,22 (68)
-EPKA MASŁÓW k/Kielc,KAK 030/61,2800,2000,94,150,144,147/17,143,78,5.4,4 (72)
-K (EPKA),KAK 025/58,2700,2000,94,277,271,134/13,266,104,5.8,3 (75)
-Włoszczowa,KAX 050/41,2200,2000,94,262,255,144/07,252,99,23,14 (89)
-R (EPPT),LOZ 161/36,2300,2000,94,348,342,200/07,340,101,21,12 (102)
-E (EPPT),LOZ 158/25,1700,2000,94,353,347,186/11,345,105,11,6 (108)
-EPPT Piotrków Trybunalski,LOZ 169/24,1600,2000,94,274,268,185/11,261,93,4.9,3 (111)
-N (EPPT),LOZ 165/20,2300,2000,94,019,013,184/11,015,105,3.9,2 (113)
-R (EPLL),LOZ 205/9,2300,2000,94,324,318,166/13,315,105,14,8 (122)
-S (EPLL),LOZ 228/8,1700,2000,94,326,320,189/13,315,107,3.7,2 (124)
-EPLL Łódź,LOZ 244/9,2200,2000,94,318,312,189/13,306,108,2.5,1 (125)
+SR 06:48 Z, MCT 06:08 Z",RNav,MSA,Level,IAS,TrkT,TrkM,Wind,HdgM,GS,Dist,Time,FuelR,ETA,ATA
+G (EPLK),LOZ 192/13,2300,5500,81,154,148,292/34,166,95,10 (10),7 (7),79.8,,
+H (EPLL),LOZ 233/16,2300,5500,81,296,289,298/31,290,56,10 (21),11 (18),77.3,,
+L (EPLL),LOZ 274/13,2000,5500,81,003,357,299/30,339,70,10 (31),9 (26),75.3,,
+Rosanow,LOZ 309/12,2300,5500,81,035,029,299/30,009,85,7.4 (38),5 (32),74.2,,
+X (EPLL),LOZ 358/7,2000,5500,81,097,091,300/30,084,114,8.8 (47),5 (36),73.2,,
+LOZ Wiaczyn Dolny,LOZ ,2600,5500,81,183,177,298/32,196,96,7.0 (54),4 (41),72.2,,
+K (EPLL),LOZ 107/7,2600,5500,81,112,106,299/32,104,119,7.5 (62),4 (44),71.4,,
+Tuszyn,LOZ 179/11,2100,5500,81,223,217,299/32,238,74,11 (73),9 (53),69.4,,
+EPLL Łódź,LOZ 244/9,2600,5500,81,315,309,296/32,303,68,11 (84),10 (63),66.7,,
 "Elevation 606 ft (22 hPa)
-SS 15:09 Z, ECT 15:45 Z",,,,,,,,,,191,2:05
+SS 14:38 Z, ECT 15:18 Z",,,,,,,,,,84,1:03,(ltr),,
 
 TWR,ŁÓDŹ TOWER,124.230
 ATIS,ATIS,135.680
 TWR,Łódź Delivery,120.005
-EPLL,Warszawa Information,128.575
-EPTM,TOMASZÓW TOWER,125.000
-APP,TOMASZÓW APPROACH,130.250
-Krakow Flight Information Service,Krakow Information,119.950
-A/G,MASŁÓW RADIO,118.080
-Krakow Flight Information Service,Krakow Information,119.275
-A/G,PIOTRKÓW RADIO,119.305
+EPLK,Łask APPROACH,125.350
 EPLL,Warszawa Information,119.450
+Przestrzeń CTA,Warszawa DIRECTOR,129.380
+Przestrzeń CTA,Warszawa APPROACH,125.055
+Przestrzeń CTA,Warszawa APPROACH,128.805
+EPLL,Warszawa Information,128.575
 
 LOD (Lodz),,110.500
 LOZ (Wiaczyn Dolny),,112.400
-KAK (Krakow Balice),,112.800
-KAX (Katowice/Pyrzowice),,114.800
 `
  
 const row = {
@@ -91,6 +75,8 @@ const fill = async () => {
         const rnavParts = entry[row.RNav].split(/( |\/)/gm)
         const rnav = `${rnavParts[0]}/${("00" + rnavParts[2]).slice(-3)}/${("00" + rnavParts[4]).slice(-3)}`
         const time = Number(entry[row.Time].split(" ")[0]);
+        const distance = Math.round(Number(entry[row.Dist].split(" ")[0]));
+
 
         let pointName = entry[0]
         if (pointName.match(/^([a-zA-Z]{1}) \(([a-zA-Z]{4})\)/gm)) {
@@ -105,8 +91,7 @@ const fill = async () => {
         inputs.filter(a => a.name.includes("wca"))[0].value = (-1.0 * (Number(entry[row.TrkM]) - Number(entry[row.HdgM]))).toString();
         inputs.filter(a => a.name.includes("mhdg"))[0].value = entry[row.HdgM]
         inputs.filter(a => a.name.includes("gs"))[0].value = entry[row.GS]
-        inputs.filter(a => a.name.includes("dist"))[0].value = entry[row.Dist]
-        inputs.filter(a => a.name.includes("dist"))[0].value = Math.round(Number(entry[row.Dist])).toString()
+        inputs.filter(a => a.name.includes("dist"))[0].value = distance
         inputs.filter(a => a.name.includes("ete"))[0].value = Math.round(time).toString();
         inputs.filter(a => a.name.includes("planfob"))[0].value = Math.round(fuelRemaining).toString();
     }
