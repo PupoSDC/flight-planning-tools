@@ -24,4 +24,11 @@ consumption per hour and finally the CSV flight plan from SkyDemon
 press f12 to open the console, copy paste the script and run. If you 
 are editing an existing route, you may need to run the script twice.
 
+# IFR Performance Filler
+
+Writes down boilerplate for performance
+
+## Steps
+
+### 1) Copy the script... run the script.
 
