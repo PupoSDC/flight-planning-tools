@@ -76,7 +76,10 @@ const fill = async () => {
     const lines = route.split("\n")
     const header = lines.find(row => row.startsWith("SR")).split(",")
     const entries = lines.map(l => l
-        .replace(/(?<=")[^"]*\./g, (match) =>  match.replace(/\./g, "."))
+        .replace(/"(.*?)"/g, (match) =>  {
+            return match.replace(/\,/g, ".")
+        })
+        .replaceAll("\"", "")
         .split(",")
     ).filter(l => l.length === header.length - 1)
  
